@@ -1,0 +1,46 @@
+{
+  "entities": {
+    "trade": {
+      "title": "Trade",
+      "description": "Record of a token sniping attempt and its result.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "tokenAddress": { "type": "string" },
+        "symbol": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["PENDING", "SUCCESS", "FAILED", "SIMULATED"] },
+        "profit": { "type": "number" },
+        "buyPrice": { "type": "number" },
+        "sellPrice": { "type": "number" },
+        "riskScore": { "type": "number" },
+        "logs": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["tokenAddress", "timestamp", "status", "ownerId"]
+    },
+    "settings": {
+      "title": "Bot Settings",
+      "description": "User configuration for the sniper bot.",
+      "type": "object",
+      "properties": {
+        "jitoEnabled": { "type": "boolean" },
+        "rustSidecarEnabled": { "type": "boolean" },
+        "simulationMode": { "type": "boolean" },
+        "maxRisk": { "type": "number" },
+        "priorityFee": { "type": "number" },
+        "solAmount": { "type": "number" }
+      }
+    }
+  },
+  "firestore": {
+    "trades": {
+      "schema": "trade",
+      "description": "History of all sniping attempts."
+    },
+    "settings": {
+      "schema": "settings",
+      "description": "Single document for bot configuration."
+    }
+  }
+}
